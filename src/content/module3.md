@@ -282,14 +282,12 @@ What device should be installed between copper pipe and a galvanized steel fitti
 ---
 
 **Question 5.**
-Which plastic pipe material requires a two-step process (primer + cement) before joining with solvent cement?
+Which plastic pipe material requires a two-step solvent-cement joining process — primer first, then cement — as mandated by most model plumbing codes?
 
 - A) ABS
-- B) PVC Schedule 40 ✅ (purple primer required in most jurisdictions)
-- C) CPVC (primer optional per some codes but strongly recommended)
-- D) Both B and C are correct for best practice ✅
-
-> *Note: Both B and C are correct for best practice. PVC requires primer per most codes; CPVC primer is required per ASTM D2846 for pressure applications. Accept D.*
+- B) CPVC
+- C) PVC Schedule 40 ✅
+- D) HDPE
 
 ---
 

@@ -218,7 +218,7 @@ Understanding common code violations helps you avoid them on the job:
 On a plumbing plan, a dashed line (─ ─ ─) running from the water heater to fixtures typically represents:
 
 - A) Cold water supply
-- B) Hot water supply ✅ (dashed = HWS in most conventions)
+- B) Hot water supply ✅
 - C) A vent pipe
 - D) A drain pipe
 
