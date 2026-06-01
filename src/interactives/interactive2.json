@@ -1,0 +1,115 @@
+{
+  "id": "interactive2",
+  "title": "Drain-Waste-Vent Slope and Vent Placement",
+  "topic": "DWV fundamentals",
+  "description": "Learners explore how drain slope and vent status affect wastewater flow in a simple sink-to-stack layout.",
+  "learningObjectives": [
+    "Identify the trap, branch drain, vent, and stack",
+    "Adjust branch drain slope within a safe learning range",
+    "Recognize why an open vent helps protect the trap seal"
+  ],
+  "diagram": {
+    "type": "simplePlumbingSystem",
+    "width": 920,
+    "height": 540,
+    "legend": [
+      { "key": "drain", "label": "Drain line", "color": "#64748b" },
+      { "key": "vent", "label": "Vent line", "color": "#8b5cf6" },
+      { "key": "fixture", "label": "Fixture", "color": "#10b981" }
+    ],
+    "nodes": [
+      { "id": "sink", "label": "Sink Basin", "x": 120, "y": 120, "kind": "fixture" },
+      { "id": "trap", "label": "P-Trap", "x": 220, "y": 200, "kind": "trap" },
+      { "id": "branchDrain", "label": "Branch Drain", "x": 420, "y": 240, "kind": "drain" },
+      { "id": "ventTakeoff", "label": "Vent Takeoff", "x": 420, "y": 150, "kind": "ventConnection" },
+      { "id": "ventStack", "label": "Vent Stack", "x": 580, "y": 90, "kind": "vent" },
+      { "id": "soilStack", "label": "Soil Stack", "x": 730, "y": 240, "kind": "stack" },
+      { "id": "buildingDrain", "label": "Building Drain", "x": 850, "y": 320, "kind": "drain" }
+    ],
+    "connections": [
+      { "from": "sink", "to": "trap", "type": "fixtureDrain" },
+      { "from": "trap", "to": "branchDrain", "type": "drain" },
+      { "from": "branchDrain", "to": "soilStack", "type": "drain" },
+      { "from": "soilStack", "to": "buildingDrain", "type": "drain" },
+      { "from": "ventTakeoff", "to": "ventStack", "type": "vent" },
+      { "from": "branchDrain", "to": "ventTakeoff", "type": "ventBranch" }
+    ]
+  },
+  "controls": {
+    "sliders": [
+      {
+        "id": "drainSlope",
+        "label": "Branch Drain Slope",
+        "min": 0.125,
+        "max": 0.5,
+        "step": 0.125,
+        "unit": "in/ft",
+        "defaultValue": 0.25,
+        "affects": ["drainVelocity", "standingWaterRisk"]
+      },
+      {
+        "id": "fixtureDischarge",
+        "label": "Sink Discharge Rate",
+        "min": 0,
+        "max": 5,
+        "step": 0.5,
+        "unit": "gpm",
+        "defaultValue": 2,
+        "affects": ["drainVelocity", "trapSealStability"]
+      }
+    ],
+    "toggles": [
+      {
+        "id": "ventOpen",
+        "label": "Vent Open to Atmosphere",
+        "defaultValue": true,
+        "effect": "Controls air entry to help stabilize trap pressure"
+      },
+      {
+        "id": "trapInstalled",
+        "label": "P-Trap Installed",
+        "defaultValue": true,
+        "effect": "Shows whether the fixture is protected from sewer gases"
+      }
+    ]
+  },
+  "tasks": {
+    "labeling": {
+      "prompt": "Match each label to the correct part of the DWV layout.",
+      "labels": [
+        "Sink Basin",
+        "P-Trap",
+        "Vent Stack",
+        "Soil Stack",
+        "Building Drain"
+      ],
+      "targets": [
+        { "id": "sink", "accepts": ["Sink Basin"] },
+        { "id": "trap", "accepts": ["P-Trap"] },
+        { "id": "ventStack", "accepts": ["Vent Stack"] },
+        { "id": "soilStack", "accepts": ["Soil Stack"] },
+        { "id": "buildingDrain", "accepts": ["Building Drain"] }
+      ]
+    },
+    "checkpointQuestions": [
+      {
+        "id": "q1",
+        "prompt": "What is the recommended training target slope used in this activity?",
+        "type": "multipleChoice",
+        "options": ["0.125 in/ft", "0.25 in/ft", "0.5 in/ft"],
+        "correctAnswer": "0.25 in/ft"
+      },
+      {
+        "id": "q2",
+        "prompt": "Why is the vent important in this system?",
+        "type": "shortAnswer",
+        "expectedKeywords": ["air", "trap seal", "pressure"]
+      }
+    ]
+  },
+  "successCriteria": [
+    "All DWV labels are correctly placed",
+    "Learner sets slope to the target training value of 0.25 in/ft",
+    "Learner explains how the vent supports trap seal protection"
+  ]
+}

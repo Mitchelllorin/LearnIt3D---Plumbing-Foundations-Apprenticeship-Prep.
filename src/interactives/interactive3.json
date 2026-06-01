@@ -1,0 +1,123 @@
+{
+  "id": "interactive3",
+  "title": "Basic Water Heater Distribution Check",
+  "topic": "Hot-water distribution",
+  "description": "Learners inspect a small water-heater system, control outlet temperature, and label the hot- and cold-side components.",
+  "learningObjectives": [
+    "Differentiate cold inlet and hot outlet piping",
+    "Identify isolation and relief components around a water heater",
+    "Observe how thermostat setting and branch valves influence delivered hot water"
+  ],
+  "diagram": {
+    "type": "simplePlumbingSystem",
+    "width": 940,
+    "height": 560,
+    "legend": [
+      { "key": "cold", "label": "Cold-water pipe", "color": "#3b82f6" },
+      { "key": "hot", "label": "Hot-water pipe", "color": "#ef4444" },
+      { "key": "safety", "label": "Safety device", "color": "#f59e0b" }
+    ],
+    "nodes": [
+      { "id": "coldMain", "label": "Cold Supply", "x": 90, "y": 320, "kind": "source" },
+      { "id": "inletValve", "label": "Cold Inlet Shutoff", "x": 240, "y": 320, "kind": "valve" },
+      { "id": "heater", "label": "Water Heater Tank", "x": 430, "y": 320, "kind": "heater" },
+      { "id": "tpr", "label": "T&P Relief Valve", "x": 430, "y": 180, "kind": "safety" },
+      { "id": "hotOutlet", "label": "Hot Outlet", "x": 560, "y": 240, "kind": "outlet" },
+      { "id": "branchValve", "label": "Fixture Branch Valve", "x": 700, "y": 240, "kind": "valve" },
+      { "id": "shower", "label": "Shower Mixer", "x": 840, "y": 240, "kind": "fixture" },
+      { "id": "drainValve", "label": "Tank Drain Valve", "x": 430, "y": 450, "kind": "service" }
+    ],
+    "connections": [
+      { "from": "coldMain", "to": "inletValve", "type": "cold" },
+      { "from": "inletValve", "to": "heater", "type": "cold" },
+      { "from": "heater", "to": "hotOutlet", "type": "hot" },
+      { "from": "hotOutlet", "to": "branchValve", "type": "hot" },
+      { "from": "branchValve", "to": "shower", "type": "fixtureFeed" },
+      { "from": "heater", "to": "tpr", "type": "safety" },
+      { "from": "heater", "to": "drainValve", "type": "service" }
+    ]
+  },
+  "controls": {
+    "sliders": [
+      {
+        "id": "thermostatSetting",
+        "label": "Thermostat Setting",
+        "min": 100,
+        "max": 140,
+        "step": 5,
+        "unit": "°F",
+        "defaultValue": 120,
+        "affects": ["tankTemperature", "fixtureDeliveryTemp"]
+      },
+      {
+        "id": "branchValveOpening",
+        "label": "Hot Branch Valve Opening",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "unit": "%",
+        "defaultValue": 70,
+        "affects": ["hotWaterFlow", "fixtureDeliveryTemp"]
+      }
+    ],
+    "toggles": [
+      {
+        "id": "coldInletOpen",
+        "label": "Cold Inlet Shutoff Open",
+        "defaultValue": true,
+        "effect": "Allows the tank to refill with cold water"
+      },
+      {
+        "id": "tprOperational",
+        "label": "T&P Relief Valve Functional",
+        "defaultValue": true,
+        "effect": "Shows whether over-temperature protection is active"
+      },
+      {
+        "id": "showerCallingForHotWater",
+        "label": "Shower Demanding Hot Water",
+        "defaultValue": true,
+        "effect": "Draws hot water through the branch line"
+      }
+    ]
+  },
+  "tasks": {
+    "labeling": {
+      "prompt": "Place the labels on the correct water-heater components.",
+      "labels": [
+        "Cold Inlet Shutoff",
+        "Water Heater Tank",
+        "T&P Relief Valve",
+        "Hot Outlet",
+        "Tank Drain Valve"
+      ],
+      "targets": [
+        { "id": "inletValve", "accepts": ["Cold Inlet Shutoff"] },
+        { "id": "heater", "accepts": ["Water Heater Tank"] },
+        { "id": "tpr", "accepts": ["T&P Relief Valve"] },
+        { "id": "hotOutlet", "accepts": ["Hot Outlet"] },
+        { "id": "drainValve", "accepts": ["Tank Drain Valve"] }
+      ]
+    },
+    "checkpointQuestions": [
+      {
+        "id": "q1",
+        "prompt": "Which device is intended to protect the tank from excessive temperature and pressure?",
+        "type": "multipleChoice",
+        "options": ["Branch Valve", "T&P Relief Valve", "Drain Valve"],
+        "correctAnswer": "T&P Relief Valve"
+      },
+      {
+        "id": "q2",
+        "prompt": "What is the common training target temperature used in this activity?",
+        "type": "shortAnswer",
+        "expectedKeywords": ["120", "120°F", "120 degrees"]
+      }
+    ]
+  },
+  "successCriteria": [
+    "All water-heater labels are correctly placed",
+    "Learner identifies the T&P valve as the primary safety device",
+    "Learner sets thermostat to the target training value of 120°F"
+  ]
+}

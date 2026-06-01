@@ -1,0 +1,123 @@
+{
+  "id": "interactive1",
+  "title": "Residential Cold-Water Supply Balance",
+  "topic": "Water supply basics",
+  "description": "Learners adjust incoming pressure and fixture valves while labeling the main parts of a simple cold-water distribution system.",
+  "learningObjectives": [
+    "Trace cold-water flow from the meter to branch fixtures",
+    "Recognize the purpose of shutoff valves and a pressure regulator",
+    "Observe how valve position changes fixture flow"
+  ],
+  "diagram": {
+    "type": "simplePlumbingSystem",
+    "width": 900,
+    "height": 520,
+    "legend": [
+      { "key": "supply", "label": "Cold-water pipe", "color": "#3b82f6" },
+      { "key": "valve", "label": "Valve", "color": "#f59e0b" },
+      { "key": "fixture", "label": "Fixture", "color": "#10b981" }
+    ],
+    "nodes": [
+      { "id": "meter", "label": "Water Meter", "x": 90, "y": 260, "kind": "source" },
+      { "id": "prv", "label": "Pressure Regulator", "x": 230, "y": 260, "kind": "control" },
+      { "id": "mainValve", "label": "Main Shutoff", "x": 360, "y": 260, "kind": "valve" },
+      { "id": "tee", "label": "Branch Tee", "x": 510, "y": 260, "kind": "junction" },
+      { "id": "sinkValve", "label": "Sink Stop Valve", "x": 650, "y": 180, "kind": "valve" },
+      { "id": "sink", "label": "Lavatory Sink", "x": 790, "y": 180, "kind": "fixture" },
+      { "id": "toiletValve", "label": "Toilet Stop Valve", "x": 650, "y": 340, "kind": "valve" },
+      { "id": "toilet", "label": "Toilet Tank", "x": 790, "y": 340, "kind": "fixture" }
+    ],
+    "connections": [
+      { "from": "meter", "to": "prv", "type": "supply" },
+      { "from": "prv", "to": "mainValve", "type": "supply" },
+      { "from": "mainValve", "to": "tee", "type": "supply" },
+      { "from": "tee", "to": "sinkValve", "type": "branch" },
+      { "from": "sinkValve", "to": "sink", "type": "fixtureFeed" },
+      { "from": "tee", "to": "toiletValve", "type": "branch" },
+      { "from": "toiletValve", "to": "toilet", "type": "fixtureFeed" }
+    ]
+  },
+  "controls": {
+    "sliders": [
+      {
+        "id": "incomingPressure",
+        "label": "Incoming Pressure",
+        "min": 30,
+        "max": 90,
+        "step": 5,
+        "unit": "psi",
+        "defaultValue": 55,
+        "affects": ["sinkFlow", "toiletFillRate"]
+      },
+      {
+        "id": "sinkDemand",
+        "label": "Sink Valve Opening",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "unit": "%",
+        "defaultValue": 60,
+        "affects": ["sinkFlow", "branchBalance"]
+      }
+    ],
+    "toggles": [
+      {
+        "id": "mainShutoffOpen",
+        "label": "Main Shutoff Open",
+        "defaultValue": true,
+        "effect": "Allows or stops flow to all downstream fixtures"
+      },
+      {
+        "id": "sinkStopOpen",
+        "label": "Sink Stop Valve Open",
+        "defaultValue": true,
+        "effect": "Allows or stops flow to the sink branch"
+      },
+      {
+        "id": "toiletStopOpen",
+        "label": "Toilet Stop Valve Open",
+        "defaultValue": true,
+        "effect": "Allows or stops flow to the toilet branch"
+      }
+    ]
+  },
+  "tasks": {
+    "labeling": {
+      "prompt": "Drag each label to the correct component in the cold-water supply diagram.",
+      "labels": [
+        "Water Meter",
+        "Pressure Regulator",
+        "Main Shutoff",
+        "Sink Stop Valve",
+        "Toilet Tank"
+      ],
+      "targets": [
+        { "id": "meter", "accepts": ["Water Meter"] },
+        { "id": "prv", "accepts": ["Pressure Regulator"] },
+        { "id": "mainValve", "accepts": ["Main Shutoff"] },
+        { "id": "sinkValve", "accepts": ["Sink Stop Valve"] },
+        { "id": "toilet", "accepts": ["Toilet Tank"] }
+      ]
+    },
+    "checkpointQuestions": [
+      {
+        "id": "q1",
+        "prompt": "Which component isolates the entire house supply for maintenance?",
+        "type": "multipleChoice",
+        "options": ["Branch Tee", "Main Shutoff", "Sink Stop Valve"],
+        "correctAnswer": "Main Shutoff"
+      },
+      {
+        "id": "q2",
+        "prompt": "What happens to both fixtures if the main shutoff toggle is turned off?",
+        "type": "shortAnswer",
+        "expectedKeywords": ["no flow", "stops", "both fixtures"]
+      }
+    ]
+  },
+  "successCriteria": [
+    "All labels are placed on the correct component",
+    "Learner sets the main shutoff open before evaluating flow",
+    "Learner identifies pressure changes at both fixtures"
+  ]
+}
