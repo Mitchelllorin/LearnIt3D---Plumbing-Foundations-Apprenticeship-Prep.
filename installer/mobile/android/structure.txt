@@ -1,0 +1,80 @@
+LearnIt3D – Plumbing Foundations Apprenticeship Prep
+Android Mobile Package Structure
+=======================================================
+
+/installer/mobile/android/
+│
+├── structure.txt                   ← This file (packaging overview)
+│
+├── app/
+│   ├── build.gradle                ← App-level Gradle build script
+│   │     • applicationId  : com.learnit3d.plumbingprep
+│   │     • minSdk         : 26  (Android 8.0 Oreo)
+│   │     • targetSdk      : 34  (Android 14)
+│   │     • versionCode    : 1
+│   │     • versionName    : "1.0.0"
+│   │
+│   ├── src/main/
+│   │   ├── AndroidManifest.xml
+│   │   │     Permissions required:
+│   │   │       • INTERNET                    (content delivery / updates)
+│   │   │       • VIBRATE                     (haptic feedback)
+│   │   │       • READ_EXTERNAL_STORAGE       (import user notes, SDK < 33)
+│   │   │       • POST_NOTIFICATIONS          (progress alerts, SDK ≥ 33)
+│   │   │
+│   │   ├── java/com/learnit3d/plumbingprep/
+│   │   │   ├── MainActivity.kt               ← Entry point; hosts WebView / Unity player
+│   │   │   ├── SplashActivity.kt             ← Branded splash screen
+│   │   │   ├── data/
+│   │   │   │   ├── UserProgressRepository.kt ← Room DB + DataStore prefs
+│   │   │   │   └── ModuleDatabase.kt         ← Room entity / DAO definitions
+│   │   │   └── ui/
+│   │   │       ├── ModuleListFragment.kt
+│   │   │       └── SceneViewerFragment.kt    ← Hosts the 3-D scene renderer
+│   │   │
+│   │   └── res/
+│   │       ├── mipmap-*/                     ← Adaptive icon layers (foreground / background)
+│   │       │   learnit3d_icon_fg.png
+│   │       │   learnit3d_icon_bg.png
+│   │       ├── values/
+│   │       │   ├── strings.xml
+│   │       │   ├── colors.xml               (brand: #0D47A1 primary, #FFB300 accent)
+│   │       │   └── themes.xml
+│   │       └── xml/
+│   │           └── network_security_config.xml
+│   │
+│   └── proguard-rules.pro
+│
+├── build.gradle                    ← Root Gradle build script
+├── gradle.properties               ← JVM args, AndroidX flags
+├── settings.gradle                 ← Module inclusion
+│
+├── keystore/
+│   └── release.jks                 ← Release signing keystore (NOT committed to VCS)
+│       Alias    : learnit3d-release
+│       Key size : 2048-bit RSA
+│       Validity : 25 years
+│
+└── fastlane/                       ← Optional CI/CD automation
+    ├── Appfile
+    └── Fastfile
+          Lanes:
+            • beta   → builds signed AAB → uploads to Firebase App Distribution
+            • deploy → builds signed AAB → uploads to Google Play (internal track)
+
+=======================================================
+Build outputs
+  Debug APK  : app/build/outputs/apk/debug/app-debug.apk
+  Release AAB: app/build/outputs/bundle/release/app-release.aab
+
+Minimum device requirements
+  OS       : Android 8.0 (API 26)
+  RAM      : 2 GB
+  Storage  : 200 MB free
+  GPU      : OpenGL ES 3.0 support (for 3-D scenes)
+
+Distribution channels
+  1. Google Play Store  (primary)
+  2. Amazon Appstore
+  3. Direct APK sideload (enterprise / apprenticeship programmes)
+=======================================================

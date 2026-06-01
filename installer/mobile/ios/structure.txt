@@ -1,0 +1,109 @@
+LearnIt3D – Plumbing Foundations Apprenticeship Prep
+iOS Mobile Package Structure
+=======================================================
+
+/installer/mobile/ios/
+│
+├── structure.txt                      ← This file (packaging overview)
+│
+├── LearnIt3DPlumbing.xcodeproj/       ← Xcode project
+│   ├── project.pbxproj
+│   └── xcshareddata/xcschemes/
+│       └── LearnIt3DPlumbing.xcscheme
+│
+├── LearnIt3DPlumbing/                 ← Main app target
+│   ├── Info.plist
+│   │     Bundle ID    : com.learnit3d.plumbingprep
+│   │     Version      : 1.0.0  (Build 1)
+│   │     Min iOS      : 16.0
+│   │     Devices      : iPhone + iPad (Universal)
+│   │
+│   ├── AppDelegate.swift              ← UIKit / SwiftUI entry point
+│   ├── SceneDelegate.swift            ← Multi-scene lifecycle
+│   │
+│   ├── Features/
+│   │   ├── Splash/
+│   │   │   └── SplashView.swift
+│   │   ├── ModuleList/
+│   │   │   ├── ModuleListView.swift   ← SwiftUI list of training modules
+│   │   │   └── ModuleListViewModel.swift
+│   │   └── SceneViewer/
+│   │       ├── SceneViewerView.swift  ← SceneKit / RealityKit 3-D renderer
+│   │       └── SceneViewerViewModel.swift
+│   │
+│   ├── Data/
+│   │   ├── Persistence.swift          ← Core Data stack
+│   │   ├── LearnIt3D.xcdatamodeld/   ← Core Data model
+│   │   │   UserProgress.entity
+│   │   │   ModuleCompletion.entity
+│   │   └── UserDefaultsStore.swift
+│   │
+│   ├── Networking/
+│   │   ├── APIClient.swift            ← URLSession-based HTTP client
+│   │   └── Endpoints.swift
+│   │
+│   └── Resources/
+│       ├── Assets.xcassets/
+│       │   ├── AppIcon.appiconset/
+│       │   │   ├── learnit3d_icon_1024.png   (App Store)
+│       │   │   ├── learnit3d_icon_180.png    (iPhone 3× @60pt)
+│       │   │   ├── learnit3d_icon_167.png    (iPad Pro 2×)
+│       │   │   ├── learnit3d_icon_152.png    (iPad 2×)
+│       │   │   └── Contents.json
+│       │   └── Colors.xcassets/
+│       │       ├── BrandPrimary.colorset/    (#0D47A1)
+│       │       └── BrandAccent.colorset/     (#FFB300)
+│       ├── LaunchScreen.storyboard
+│       └── Localizable.strings
+│
+├── LearnIt3DPlumbingTests/            ← Unit test target
+│   └── ModuleListViewModelTests.swift
+│
+├── LearnIt3DPlumbingUITests/          ← UI test target
+│   └── OnboardingFlowUITests.swift
+│
+├── Podfile                            ← CocoaPods dependency file
+│     pod 'RealityKit'        → 3-D scene rendering
+│     pod 'Lottie'            → animated UI elements
+│     pod 'Alamofire'         → (optional) advanced networking
+│
+├── Podfile.lock
+│
+├── ExportOptions.plist                ← xcodebuild archive export config
+│     Method            : app-store-connect
+│     Team ID           : <REPLACE_WITH_APPLE_TEAM_ID>
+│     Upload symbols    : true
+│
+└── fastlane/                          ← CI/CD automation
+    ├── Appfile
+    │     app_identifier "com.learnit3d.plumbingprep"
+    │     apple_id        "<apple_id_email>"
+    │     team_id         "<REPLACE_WITH_APPLE_TEAM_ID>"
+    │
+    └── Fastfile
+          Lanes:
+            • beta   → gym (build IPA) → pilot (upload to TestFlight)
+            • deploy → gym (build IPA) → deliver (submit to App Store)
+
+=======================================================
+Build outputs
+  Debug IPA   : build/Debug-iphoneos/LearnIt3DPlumbing.app
+  Release IPA : build/LearnIt3DPlumbing.ipa   (via xcodebuild archive)
+
+Minimum device requirements
+  OS         : iOS 16.0
+  Device     : iPhone X or later / iPad Air (3rd gen) or later
+  Storage    : 250 MB free
+  GPU        : Metal support required (for 3-D scenes)
+
+Capabilities required (Xcode Signing & Capabilities)
+  • Push Notifications
+  • Background Modes → Background fetch (content updates)
+  • In-App Purchase   (future module unlock)
+  • iCloud            (optional: CloudKit progress sync)
+
+Distribution channels
+  1. App Store (primary)
+  2. TestFlight (beta / apprenticeship programme testers)
+  3. Ad-hoc / MDM (enterprise deployment to trade schools)
+=======================================================
